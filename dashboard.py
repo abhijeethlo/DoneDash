@@ -81,4 +81,5 @@ def update_gauges(n):
     return fig1, fig2, fig3
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(debug=True)
+
