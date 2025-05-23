@@ -4,12 +4,14 @@ import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 import random
 
+# Initialize the Dash app
 app = dash.Dash(__name__)
 app.title = "Asset Scan Dashboard"
 
+# App layout with three flashy analog meters
 app.layout = html.Div([
     html.H1("🏗️ Smart Asset Scan Dashboard", style={'textAlign': 'center'}),
-    
+
     html.Div([
         dcc.Graph(id='speedometer'),
         dcc.Graph(id='accuracy-meter'),
@@ -23,6 +25,7 @@ app.layout = html.Div([
     )
 ])
 
+# Callback to update the meters every 2 seconds
 @app.callback(
     Output('speedometer', 'figure'),
     Output('accuracy-meter', 'figure'),
@@ -31,13 +34,12 @@ app.layout = html.Div([
 )
 def update_gauges(n):
     scan_rate = random.randint(20, 100)
-    accuracy = random.uniform(85, 99)
+    accuracy = round(random.uniform(85, 99), 2)
     health = random.randint(50, 100)
 
     fig1 = go.Figure(go.Indicator(
         mode="gauge+number",
         value=scan_rate,
-        domain={'x': [0, 1], 'y': [0, 1]},
         title={'text': "Scan Speed (Labels/min)"},
         gauge={
             'axis': {'range': [0, 120]},
@@ -80,7 +82,6 @@ def update_gauges(n):
 
     return fig1, fig2, fig3
 
+# Dash 3+ compliant run method with GitHub Codespaces compatibility
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8050)
-
-
